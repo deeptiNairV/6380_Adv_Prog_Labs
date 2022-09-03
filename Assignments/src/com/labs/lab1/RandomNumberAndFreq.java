@@ -33,7 +33,7 @@ public class RandomNumberAndFreq {
 				sb1.append(base.charAt(r.nextInt(base.length())));
 				
 				float rValue = r.nextFloat();
-				//sb2 will generate DNA 3'mer (freq of 0.12,0.38,0.39,0.11 for ACGT respectively)
+				//sb2 will generate DNA 3'mer (frequency of 0.12,0.38,0.39,0.11 for ACGT respectively)
 				if(rValue < 0.12){
 					sb2.append("A");
 					

@@ -42,7 +42,8 @@ public class GUIBasedAminoAcidQuiz_V2 extends JFrame{
 	private final JButton enterButton = new JButton("Enter");
 	private final JButton quitButton = new JButton("Cancel");
 	private JLabel  timerLabel =  new JLabel("Time left 30 secs");
-	public static int scores = 0;
+	public static int right = 0;
+	public static int wrong = 0;
 	private int count = Integer.parseInt(timeInSec.getText());
 	Timer timer;
 	public static Set<String> correctAnsSet;
@@ -98,7 +99,8 @@ public class GUIBasedAminoAcidQuiz_V2 extends JFrame{
 	            TimeClass tc = new TimeClass(count);
 	            timer = new Timer(1000, tc);
 	            timer.start();
-	            scores = 0;
+	            right = 0;
+	            wrong = 0;
 	            correctAnsSet = new HashSet<String>();
 	            wrongAnsSet = new HashSet<String>();
 	        }
@@ -118,12 +120,12 @@ public class GUIBasedAminoAcidQuiz_V2 extends JFrame{
 	                Toolkit.getDefaultToolkit().beep();
 	            } 
 	            if (timeLeft >= 1) {
-	                timerLabel.setText("Time Remaining " + timeLeft + " seconds  Score:"+scores);
+	                timerLabel.setText("Time Remaining " + timeLeft + " seconds  Right:"+right+" Wrong "+wrong);
 	                
 	            } else {
 	                timer.stop();
 	                timerLabel.setText("Your time is over!");
-	                textArea.setText("\nYour Final Score: "+scores+"\n");
+	                textArea.setText("\nYour Final Score: \nCorrect: "+right+"\n"+"Incorrect: "+wrong+"\n\n");
 	                displayResult();
 //	                displayCorrectAnswers(strAA);
 	            }
@@ -216,11 +218,12 @@ public class GUIBasedAminoAcidQuiz_V2 extends JFrame{
 						count = Integer.parseInt((timerLabel.getText()).replaceAll("[^0-9]", ""));
 						if (count > 0) {
 							if (shrtNmeInput.getText().toUpperCase().equals(SHORT_NAMES[fIndex])) {
-								scores++;
+								right++;
 //								strAA += SHORT_NAMES[fIndex];
 								correctAnsSet.add(SHORT_NAMES[fIndex]);
 								populateFullNameAA();
 							} else {
+								wrong++;
 								wrongAnsSet.add(SHORT_NAMES[fIndex]);
 								populateFullNameAA();
 							}
@@ -236,14 +239,14 @@ public class GUIBasedAminoAcidQuiz_V2 extends JFrame{
 	}
 	
 	private void displayResult() {
-		textArea.append("\nYou answered the following short name/s correctly\n");
+		textArea.append("\nYou answered the following short name/s correctly: \n");
 		if (correctAnsSet.size() != 0) {
 			for (String c : correctAnsSet) {
 
 				textArea.append(c + " ");
 			}
 		} else {
-			textArea.append("\nOops!!!You answered all short names incorrectly");
+			textArea.append("\nOops!!!You answered all short names incorrectly: ");
 		}
 		textArea.append("\n\n\nBelow short names were incorrect \n");
 		if (wrongAnsSet.size() != 0) {
